@@ -5,23 +5,21 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class AppConfig implements ConfigProvider {
+public class AppConfig implements TestFileNameProvider, CsvProvider {
 
     private String testFileName;
-    private String exceptionMessage;
+
     private Integer skipNumber;
+
     private Character delimiter;
+
     private String questionField;
+
     private String answersField;
 
     @Override
     public String getTestFileName() {
         return testFileName;
-    }
-
-    @Override
-    public String getExceptionMessage() {
-        return exceptionMessage;
     }
 
     @Override

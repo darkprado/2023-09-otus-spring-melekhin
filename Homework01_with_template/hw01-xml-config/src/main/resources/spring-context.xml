@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean id="ioService" class="ru.otus.hw.service.StreamsIOService">
         <constructor-arg index="0">
@@ -12,18 +12,16 @@
         </constructor-arg>
     </bean>
 
-    <bean id="configProvider" class="ru.otus.hw.config.AppConfig">
+    <bean id="appConfig" class="ru.otus.hw.config.AppConfig">
         <constructor-arg name="testFileName" type="java.lang.String" value="questions.csv"/>
         <constructor-arg name="questionField" type="java.lang.String" value="text"/>
         <constructor-arg name="answersField" type="java.lang.String" value="answers"/>
-        <constructor-arg name="exceptionMessage" type="java.lang.String" value="File reading error"/>
         <constructor-arg name="skipNumber" type="java.lang.Integer" value="1"/>
         <constructor-arg name="delimiter" type="java.lang.Character" value=";"/>
     </bean>
 
     <bean id="questionDao" class="ru.otus.hw.dao.CsvQuestionDao">
-        <constructor-arg name="configProvider" ref="configProvider"/>
-        <constructor-arg name="converter" ref="converter"/>
+        <constructor-arg name="appConfig" ref="appConfig"/>
     </bean>
 
     <bean id="testRunnerService" class="ru.otus.hw.service.TestRunnerServiceImpl">
