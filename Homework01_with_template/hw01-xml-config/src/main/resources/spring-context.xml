@@ -21,7 +21,7 @@
     </bean>
 
     <bean id="questionDao" class="ru.otus.hw.dao.CsvQuestionDao">
-        <constructor-arg name="appConfig" ref="appConfig"/>
+        <constructor-arg name="csvProvider" ref="appConfig"/>
     </bean>
 
     <bean id="testRunnerService" class="ru.otus.hw.service.TestRunnerServiceImpl">

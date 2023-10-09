@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class AppConfig implements TestFileNameProvider, CsvProvider {
+public class AppConfig implements CsvProvider {
 
     private String testFileName;
 

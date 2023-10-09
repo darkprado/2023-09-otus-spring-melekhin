@@ -14,4 +14,6 @@ public interface CsvProvider {
 
     String getAnswersField();
 
+    String getTestFileName();
+
 }

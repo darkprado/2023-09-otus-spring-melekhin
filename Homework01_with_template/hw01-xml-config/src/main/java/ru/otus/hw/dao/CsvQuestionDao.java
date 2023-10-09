@@ -14,7 +14,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import lombok.RequiredArgsConstructor;
-import ru.otus.hw.config.AppConfig;
+import ru.otus.hw.config.CsvProvider;
 import ru.otus.hw.dao.dto.QuestionDto;
 import ru.otus.hw.domain.Question;
 import ru.otus.hw.exceptions.QuestionReadException;
@@ -22,24 +22,24 @@ import ru.otus.hw.exceptions.QuestionReadException;
 @RequiredArgsConstructor
 public class CsvQuestionDao implements QuestionDao {
 
-    private final AppConfig appConfig;
+    private final CsvProvider csvProvider;
 
     @Override
     public List<Question> findAll() {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(
                 Objects.requireNonNull(
-                        getClass().getClassLoader().getResourceAsStream(appConfig.getTestFileName())),
+                        getClass().getClassLoader().getResourceAsStream(csvProvider.getTestFileName())),
                 StandardCharsets.UTF_8)
         )) {
             ColumnPositionMappingStrategy<QuestionDto> strategy =
                     new ColumnPositionMappingStrategyBuilder<QuestionDto>().build();
             strategy.setType(QuestionDto.class);
-            String[] columns = new String[] { appConfig.getQuestionField(), appConfig.getAnswersField() };
+            String[] columns = new String[] { csvProvider.getQuestionField(), csvProvider.getAnswersField() };
             strategy.setColumnMapping(columns);
 
             CsvToBean<QuestionDto> csvToBean = new CsvToBeanBuilder<QuestionDto>(fileReader)
-                    .withSeparator(appConfig.getDelimiter())
-                    .withSkipLines(appConfig.getSkipNumber())
+                    .withSeparator(csvProvider.getDelimiter())
+                    .withSkipLines(csvProvider.getSkipNumber())
                     .withMappingStrategy(strategy)
                     .build();
 
