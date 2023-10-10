@@ -6,9 +6,9 @@ package ru.otus.hw.config;
  */
 public interface CsvProvider {
 
-    Integer getSkipNumber();
+    int getSkipNumber();
 
-    Character getDelimiter();
+    char getDelimiter();
 
     String getQuestionField();
 

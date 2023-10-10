@@ -46,7 +46,7 @@ public class CsvQuestionDao implements QuestionDao {
             return csvToBean.parse().stream()
                     .map(QuestionDto::toDomainObject)
                     .collect(Collectors.toList());
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new QuestionReadException(e.getMessage(), e);
         }
     }

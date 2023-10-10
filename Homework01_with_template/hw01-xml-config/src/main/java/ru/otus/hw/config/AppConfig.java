@@ -9,9 +9,9 @@ public class AppConfig implements CsvProvider {
 
     private String testFileName;
 
-    private Integer skipNumber;
+    private int skipNumber;
 
-    private Character delimiter;
+    private char delimiter;
 
     private String questionField;
 
@@ -23,12 +23,12 @@ public class AppConfig implements CsvProvider {
     }
 
     @Override
-    public Integer getSkipNumber() {
+    public int getSkipNumber() {
         return skipNumber;
     }
 
     @Override
-    public Character getDelimiter() {
+    public char getDelimiter() {
         return delimiter;
     }
 

@@ -16,8 +16,8 @@
         <constructor-arg name="testFileName" type="java.lang.String" value="questions.csv"/>
         <constructor-arg name="questionField" type="java.lang.String" value="text"/>
         <constructor-arg name="answersField" type="java.lang.String" value="answers"/>
-        <constructor-arg name="skipNumber" type="java.lang.Integer" value="1"/>
-        <constructor-arg name="delimiter" type="java.lang.Character" value=";"/>
+        <constructor-arg name="skipNumber" type="int" value="1"/>
+        <constructor-arg name="delimiter" type="char" value=";"/>
     </bean>
 
     <bean id="questionDao" class="ru.otus.hw.dao.CsvQuestionDao">
