@@ -26,7 +26,11 @@ public class TestServiceImpl implements TestService {
         var testResult = new TestResult(student);
 
         for (var question: questions) {
-            String userAnswer = ioService.readStringWithPrompt(question.text());
+            ioService.printLine(question.text());
+            for (var answer : question.answers()) {
+                ioService.printLine(answer.text());
+            }
+            String userAnswer = ioService.readString();
             var isAnswerValid = question.answers().stream()
                     .filter(answer -> answer.text().equals(userAnswer))
                     .findFirst()

@@ -19,11 +19,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CsvQuestionDaoTest {
 
-    private final String FILE_NAME = "test.csv";
-    private final char DELIMITER = ';';
-    private final int SKIP_NUMBER_RECORD = 1;
-    private final String QUESTION_FIELD = "text";
-    private final String ANSWER_FIELD = "answers";
+    private static final String FILE_NAME = "test.csv";
+    private static final char DELIMITER = ';';
+    private static final int SKIP_NUMBER_RECORD = 1;
+    private static final String QUESTION_FIELD = "text";
+    private static final String ANSWER_FIELD = "answers";
 
     @Mock
     private CsvConfig config;

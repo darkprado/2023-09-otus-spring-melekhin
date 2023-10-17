@@ -51,7 +51,7 @@ class TestServiceImplTest {
         when(dao.findAll()).thenReturn(Collections.singletonList(question));
         service.executeTestFor(new Student(NAME, SURNAME));
         verify(dao, times(1)).findAll();
-        verify(ioService, times(1)).printLine(anyString());
+        verify(ioService, times(3)).printLine(anyString());
     }
 
     @Test
@@ -60,7 +60,7 @@ class TestServiceImplTest {
         Answer answer = new Answer(ANSWER_TEXT, true);
         Question question = new Question(QUESTION_TEXT, Collections.singletonList(answer));
         when(dao.findAll()).thenReturn(Collections.singletonList(question));
-        when(ioService.readStringWithPrompt(anyString())).thenReturn(ANSWER_TEXT);
+        when(ioService.readString()).thenReturn(ANSWER_TEXT);
         TestResult testResult = service.executeTestFor(new Student(NAME, SURNAME));
         Assertions.assertEquals(1, testResult.getRightAnswersCount());
     }
@@ -71,7 +71,7 @@ class TestServiceImplTest {
         Answer answer = new Answer(ANSWER_TEXT, true);
         Question question = new Question(QUESTION_TEXT, Collections.singletonList(answer));
         when(dao.findAll()).thenReturn(Collections.singletonList(question));
-        when(ioService.readStringWithPrompt(anyString())).thenReturn(INCORRECT_ANSWER_TEXT);
+        when(ioService.readString()).thenReturn(INCORRECT_ANSWER_TEXT);
         TestResult testResult = service.executeTestFor(new Student(NAME, SURNAME));
         Assertions.assertEquals(0, testResult.getRightAnswersCount());
     }
