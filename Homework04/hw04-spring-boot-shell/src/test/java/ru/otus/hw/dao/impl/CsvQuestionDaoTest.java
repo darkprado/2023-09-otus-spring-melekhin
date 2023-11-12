@@ -2,15 +2,16 @@ package ru.otus.hw.dao.impl;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ru.otus.hw.commands.TestCommands;
 import ru.otus.hw.config.TestFileNameProvider;
+import ru.otus.hw.service.ResultService;
+import ru.otus.hw.service.impl.LocalizedMessagesServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
@@ -26,10 +27,19 @@ class CsvQuestionDaoTest {
     private static final String QUESTION_FIELD = "text";
     private static final String ANSWER_FIELD = "answers";
 
-    @Mock
+    @MockBean
     private TestFileNameProvider fileNameProvider;
 
-    @InjectMocks
+    @MockBean
+    private TestCommands testCommands;
+
+    @MockBean
+    private LocalizedMessagesServiceImpl localizedMessagesService;
+
+    @MockBean
+    private ResultService resultService;
+
+    @Autowired
     private CsvQuestionDao dao;
 
     @Test
