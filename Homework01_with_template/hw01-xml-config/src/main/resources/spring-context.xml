@@ -6,13 +6,13 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="ioService" class="ru.otus.hw.service.StreamsIOService">
+    <bean id="ioService" class="ru.otus.hw.service.impl.StreamsIOService">
         <constructor-arg index="0">
             <util:constant static-field="java.lang.System.out"/>
         </constructor-arg>
     </bean>
 
-    <bean id="appConfig" class="ru.otus.hw.config.AppConfig">
+    <bean id="appConfig" class="ru.otus.hw.config.impl.AppConfig">
         <constructor-arg name="testFileName" type="java.lang.String" value="questions.csv"/>
         <constructor-arg name="questionField" type="java.lang.String" value="text"/>
         <constructor-arg name="answersField" type="java.lang.String" value="answers"/>
@@ -20,15 +20,15 @@
         <constructor-arg name="delimiter" type="char" value=";"/>
     </bean>
 
-    <bean id="questionDao" class="ru.otus.hw.dao.CsvQuestionDao">
+    <bean id="questionDao" class="ru.otus.hw.dao.impl.CsvQuestionDao">
         <constructor-arg name="csvProvider" ref="appConfig"/>
     </bean>
 
-    <bean id="testRunnerService" class="ru.otus.hw.service.TestRunnerServiceImpl">
+    <bean id="testRunnerService" class="ru.otus.hw.service.impl.TestRunnerServiceImpl">
         <constructor-arg name="testService" ref="testService"/>
     </bean>
 
-    <bean id="testService" class="ru.otus.hw.service.TestServiceImpl">
+    <bean id="testService" class="ru.otus.hw.service.impl.TestServiceImpl">
         <constructor-arg name="ioService" ref="ioService"/>
         <constructor-arg name="dao" ref="questionDao"/>
     </bean>
