@@ -1,0 +1,7 @@
+# Добавить сюда своих вопросов. Эту строку надо пропустить при настройке CsvToBean (withSkipLines)
+Есть ли жизнь на Марсе?;неизвестно%true|живут инопланетяне%false
+Как следует загружать ресурсы jar в Java?;ClassLoader#geResourceAsStream or ClassPathResource#getInputStream%true|ClassLoader#geResource#getFile + FileReader%false|Wingardium Leviosa%false
+От какого класса наследуется все в Java?;object%true|list%false|runtime%false|collection%false
+Что мы изучаем?;spring%true|java%false|C++%false|C#%false
+Какон сейчас время года?;лето%false|зима%false|осень%true|весна%false
+Чем люди видят?;рот%false|нос%false|глаза%true|уши%false
