@@ -1,15 +1,10 @@
 package ru.otus.hw.repositories.impl;
 
-import java.util.List;
-import java.util.stream.LongStream;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
 import ru.otus.hw.models.Author;
@@ -28,17 +23,13 @@ class AuthorRepositoryORMTest {
     @Autowired
     private AuthorRepositoryORM repository;
 
-    private List<Author> dbAuthors;
-
-    @BeforeEach
-    void setUp() {
-        dbAuthors = getDbAuthors();
-    }
+    @Autowired
+    private TestEntityManager em;
 
     @DisplayName("Должен загружать автора по id")
-    @ParameterizedTest
-    @MethodSource("getDbAuthors")
-    void shouldReturnCorrectAuthorById(Author expectedAuthor) {
+    @Test
+    void shouldReturnCorrectAuthorById() {
+        var expectedAuthor = em.find(Author.class, 1);
         var actualAuthor = repository.findById(expectedAuthor.getId());
         assertThat(actualAuthor).isPresent()
                 .get()
@@ -49,11 +40,12 @@ class AuthorRepositoryORMTest {
     @DisplayName("Должен загружать список всех авторов")
     @Test
     void shouldReturnCorrectAuthorsList() {
+        var expectedAuthors = em.getEntityManager().createQuery("select a from Author a", Author.class).getResultList();
         var actualAuthors = repository.findAll();
         for (int i = 0; i < actualAuthors.size(); i++) {
             assertThat(actualAuthors.get(i))
                     .usingRecursiveComparison()
-                    .isEqualTo(dbAuthors.get(i));
+                    .isEqualTo(expectedAuthors.get(i));
         }
     }
 
@@ -101,12 +93,6 @@ class AuthorRepositoryORMTest {
         repository.deleteById(1L);
         long after = repository.findAll().size();
         assertThat(before).isGreaterThan(after);
-    }
-
-    private static List<Author> getDbAuthors() {
-        return LongStream.range(1, 4).boxed()
-                .map(id -> new Author(id, "Author_" + id))
-                .toList();
     }
 
 }

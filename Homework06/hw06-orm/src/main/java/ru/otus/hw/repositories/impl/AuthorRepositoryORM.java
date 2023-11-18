@@ -35,7 +35,6 @@ public class AuthorRepositoryORM implements AuthorRepository {
     public Author save(Author author) {
         if (author.getId() == null) {
             em.persist(author);
-            em.flush();
         } else {
             em.merge(author);
         }
@@ -43,10 +42,8 @@ public class AuthorRepositoryORM implements AuthorRepository {
     }
 
     @Override
-    public long deleteById(Long id) {
-        return em.createQuery("delete from Author a where a.id = :id")
-                .setParameter(IDENTIFIER, id)
-                .executeUpdate();
+    public void deleteById(Long id) {
+        em.remove(em.find(Author.class, id));
     }
 
 }

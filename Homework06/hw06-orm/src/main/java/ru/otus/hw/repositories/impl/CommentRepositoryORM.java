@@ -5,15 +5,13 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
+import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Comment;
 import ru.otus.hw.repositories.CommentRepository;
-
-import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.FETCH;
 
 /**
  * @author s.melekhin
@@ -34,11 +32,9 @@ public class CommentRepositoryORM implements CommentRepository {
     }
 
     @Override
-    public List<Comment> findAllByBookId(Long bookId) {
-        EntityGraph<?> entityGraph = em.getEntityGraph("comment-graph");
+    public List<Comment> findAllByBook(Book book) {
         TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.book.id = :id", Comment.class)
-                .setParameter(IDENTIFIER, bookId);
-        query.setHint(FETCH.getKey(), entityGraph);
+                .setParameter(IDENTIFIER, book.getId());
         return query.getResultList();
     }
 
@@ -46,7 +42,6 @@ public class CommentRepositoryORM implements CommentRepository {
     public Comment save(Comment comment) {
         if (comment.getId() == null) {
             em.persist(comment);
-            em.flush();
         } else {
             em.merge(comment);
         }
@@ -55,8 +50,6 @@ public class CommentRepositoryORM implements CommentRepository {
 
     @Override
     public void deleteById(Long id) {
-        em.createQuery("delete from Comment c where c.id = :id")
-                .setParameter(IDENTIFIER, id)
-                .executeUpdate();
+        em.remove(em.find(Comment.class, id));
     }
 }

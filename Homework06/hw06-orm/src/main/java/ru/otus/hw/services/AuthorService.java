@@ -13,5 +13,5 @@ public interface AuthorService {
 
     Author save(Author genre);
 
-    long deleteById(long id);
+    void deleteById(long id);
 }

@@ -26,8 +26,8 @@ public class AuthorCommands {
     }
 
     @ShellMethod(value = "Delete author", key = "da")
-    public long deleteGenre(long id) {
-        return authorService.deleteById(id);
+    public void deleteGenre(long id) {
+        authorService.deleteById(id);
     }
 
     @ShellMethod(value = "Find author by id", key = "fa")

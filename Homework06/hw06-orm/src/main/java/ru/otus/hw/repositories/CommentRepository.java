@@ -3,6 +3,7 @@ package ru.otus.hw.repositories;
 import java.util.List;
 import java.util.Optional;
 
+import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Comment;
 
 /**
@@ -13,7 +14,7 @@ public interface CommentRepository {
 
     Optional<Comment> findById(Long id);
 
-    List<Comment> findAllByBookId(Long bookId);
+    List<Comment> findAllByBook(Book book);
 
     Comment save(Comment comment);
 

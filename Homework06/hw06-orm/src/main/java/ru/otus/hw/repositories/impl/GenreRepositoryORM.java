@@ -35,7 +35,6 @@ public class GenreRepositoryORM implements GenreRepository {
     public Genre save(Genre genre) {
         if (genre.getId() == null) {
             em.persist(genre);
-            em.flush();
         } else {
             em.merge(genre);
         }
@@ -43,10 +42,8 @@ public class GenreRepositoryORM implements GenreRepository {
     }
 
     @Override
-    public long deleteById(Long id) {
-        return em.createQuery("delete from Genre g where g.id = :id")
-                .setParameter(IDENTIFIER, id)
-                .executeUpdate();
+    public void deleteById(Long id) {
+        em.remove(em.find(Genre.class, id));
     }
 
 }

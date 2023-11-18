@@ -1,5 +1,6 @@
 package ru.otus.hw.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +34,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Comment> findAllByBookId(Long id) {
-        return commentRepository.findAllByBookId(id);
+    public List<Comment> findAllByBook(Long id) {
+        List<Comment> comments = new ArrayList<>();
+        return bookRepository.findById(id)
+                .map(commentRepository::findAllByBook)
+                .orElseThrow(() -> new EntityNotFoundException("Book with id %s not found".formatted(id)));
     }
 
     @Transactional

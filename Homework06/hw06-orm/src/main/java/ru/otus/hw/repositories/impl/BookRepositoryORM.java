@@ -42,7 +42,6 @@ public class BookRepositoryORM implements BookRepository {
     public Book save(Book book) {
         if (book.getId() == null) {
             em.persist(book);
-            em.flush();
         } else {
             em.merge(book);
         }
@@ -51,9 +50,7 @@ public class BookRepositoryORM implements BookRepository {
 
     @Override
     public void deleteById(Long id) {
-        em.createQuery("delete from Book b where b.id = :id")
-                .setParameter(IDENTIFIER, id)
-                .executeUpdate();
+        em.remove(em.find(Book.class, id));
     }
 
 }

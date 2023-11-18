@@ -1,17 +1,13 @@
 package ru.otus.hw.repositories.impl;
 
-import java.util.List;
-import java.util.stream.LongStream;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
+import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Genre;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,17 +24,13 @@ class GenreRepositoryORMTest {
     @Autowired
     private GenreRepositoryORM repository;
 
-    private List<Genre> dbGenres;
-
-    @BeforeEach
-    void setUp() {
-        dbGenres = getDbGenres();
-    }
+    @Autowired
+    private TestEntityManager em;
 
     @DisplayName("Должен загружать жанр по id")
-    @ParameterizedTest
-    @MethodSource("getDbGenres")
-    void shouldReturnCorrectGenreById(Genre expectedGenre) {
+    @Test
+    void shouldReturnCorrectGenreById() {
+        var expectedGenre = em.find(Genre.class, 1);
         var actualGenre = repository.findById(expectedGenre.getId());
         assertThat(actualGenre).isPresent()
                 .get()
@@ -50,10 +42,11 @@ class GenreRepositoryORMTest {
     @Test
     void shouldReturnCorrectGenresList() {
         var actualGenres = repository.findAll();
+        var expectedAuthors = em.getEntityManager().createQuery("select g from Genre g", Genre.class).getResultList();
         for (int i = 0; i < actualGenres.size(); i++) {
             assertThat(actualGenres.get(i))
                     .usingRecursiveComparison()
-                    .isEqualTo(dbGenres.get(i));
+                    .isEqualTo(expectedAuthors.get(i));
         }
     }
 
@@ -101,12 +94,6 @@ class GenreRepositoryORMTest {
         repository.deleteById(1L);
         long after = repository.findAll().size();
         assertThat(before).isGreaterThan(after);
-    }
-
-    private static List<Genre> getDbGenres() {
-        return LongStream.range(1, 4).boxed()
-                .map(id -> new Genre(id, "Genre_" + id))
-                .toList();
     }
 
 }

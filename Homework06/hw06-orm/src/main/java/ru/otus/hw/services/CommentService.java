@@ -12,7 +12,7 @@ import ru.otus.hw.models.Comment;
 public interface CommentService {
 
 
-    List<Comment> findAllByBookId(Long id);
+    List<Comment> findAllByBook(Long id);
 
     Optional<Comment> findById(Long id);
 
