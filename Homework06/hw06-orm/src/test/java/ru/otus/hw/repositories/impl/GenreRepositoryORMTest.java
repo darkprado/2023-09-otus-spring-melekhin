@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
-import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Genre;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,9 +69,7 @@ class GenreRepositoryORMTest {
     void shouldSaveUpdatedGenre() {
         var expectedGenre = new Genre(1L, "Genre_100500");
 
-        assertThat(repository.findById(expectedGenre.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Genre.class, expectedGenre.getId()))
                 .isNotEqualTo(expectedGenre);
 
         var returnedGenre = repository.save(expectedGenre);
@@ -80,9 +77,7 @@ class GenreRepositoryORMTest {
                 .matches(book -> book.getId() > 0)
                 .usingRecursiveComparison().ignoringExpectedNullFields().isEqualTo(expectedGenre);
 
-        assertThat(repository.findById(returnedGenre.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Genre.class, returnedGenre.getId()))
                 .usingRecursiveComparison()
                 .isEqualTo(returnedGenre);
     }

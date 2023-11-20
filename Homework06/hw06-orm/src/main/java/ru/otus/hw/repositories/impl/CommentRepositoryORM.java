@@ -21,8 +21,6 @@ import ru.otus.hw.repositories.CommentRepository;
 @RequiredArgsConstructor
 public class CommentRepositoryORM implements CommentRepository {
 
-    private static final String IDENTIFIER = "id";
-
     @PersistenceContext
     private final EntityManager em;
 
@@ -34,7 +32,7 @@ public class CommentRepositoryORM implements CommentRepository {
     @Override
     public List<Comment> findAllByBook(Book book) {
         TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.book.id = :id", Comment.class)
-                .setParameter(IDENTIFIER, book.getId());
+                .setParameter("id", book.getId());
         return query.getResultList();
     }
 
@@ -43,7 +41,7 @@ public class CommentRepositoryORM implements CommentRepository {
         if (comment.getId() == null) {
             em.persist(comment);
         } else {
-            em.merge(comment);
+            comment = em.merge(comment);
         }
         return comment;
     }

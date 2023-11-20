@@ -58,9 +58,7 @@ class AuthorRepositoryORMTest {
                 .matches(author -> author.getId() > 0)
                 .usingRecursiveComparison().ignoringExpectedNullFields().isEqualTo(expectedAuthor);
 
-        assertThat(repository.findById(returnedAuthor.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Author.class, returnedAuthor.getId()))
                 .isEqualTo(returnedAuthor);
     }
 
@@ -79,9 +77,7 @@ class AuthorRepositoryORMTest {
                 .matches(author -> author.getId() > 0)
                 .usingRecursiveComparison().ignoringExpectedNullFields().isEqualTo(expectedAuthor);
 
-        assertThat(repository.findById(returnedAuthor.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Author.class, returnedAuthor.getId()))
                 .usingRecursiveComparison()
                 .isEqualTo(returnedAuthor);
     }

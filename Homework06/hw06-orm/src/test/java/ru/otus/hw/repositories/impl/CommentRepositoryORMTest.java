@@ -68,9 +68,7 @@ class CommentRepositoryORMTest {
                 .ignoringExpectedNullFields()
                 .isEqualTo(expectedComment);
 
-        assertThat(repository.findById(returnedComment.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Comment.class, returnedComment.getId()))
                 .isEqualTo(returnedComment);
     }
 
@@ -79,9 +77,7 @@ class CommentRepositoryORMTest {
     void shouldSaveUpdatedComment() {
         var expectedComment = new Comment(1L, "Comment_12", em.find(Book.class, 1));
 
-        assertThat(repository.findById(expectedComment.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Comment.class, expectedComment.getId()))
                 .usingRecursiveComparison()
                 .ignoringExpectedNullFields()
                 .isNotEqualTo(expectedComment);
@@ -93,9 +89,7 @@ class CommentRepositoryORMTest {
                 .ignoringExpectedNullFields()
                 .isEqualTo(expectedComment);
 
-        assertThat(repository.findById(returnedComment.getId()))
-                .isPresent()
-                .get()
+        assertThat(em.find(Comment.class, returnedComment.getId()))
                 .usingRecursiveComparison()
                 .ignoringExpectedNullFields()
                 .isEqualTo(returnedComment);

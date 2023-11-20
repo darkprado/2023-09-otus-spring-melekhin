@@ -2,10 +2,7 @@ package ru.otus.hw.models;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
-import jakarta.persistence.NamedEntityGraph;
-import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
@@ -27,15 +24,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "comments")
-@NamedEntityGraph(name = "comment-graph",
-        attributeNodes = { @NamedAttributeNode(value = "book", subgraph = "book-for-comment-graph") }
-        , subgraphs = {
-        @NamedSubgraph(name = "book-for-comment-graph",
-                attributeNodes = {
-                        @NamedAttributeNode(value = "id"),
-                        @NamedAttributeNode(value = "title")
-                })
-})
 public class Comment {
 
     @Id

@@ -19,9 +19,6 @@ import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphTyp
 @RequiredArgsConstructor
 public class BookRepositoryORM implements BookRepository {
 
-    private static final String IDENTIFIER = "id";
-
-
     @PersistenceContext
     private final EntityManager em;
 
@@ -43,7 +40,7 @@ public class BookRepositoryORM implements BookRepository {
         if (book.getId() == null) {
             em.persist(book);
         } else {
-            em.merge(book);
+            book = em.merge(book);
         }
         return book;
     }

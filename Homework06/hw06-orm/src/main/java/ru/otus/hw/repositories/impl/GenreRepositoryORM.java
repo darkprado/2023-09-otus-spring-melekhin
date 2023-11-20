@@ -15,8 +15,6 @@ import ru.otus.hw.repositories.GenreRepository;
 @RequiredArgsConstructor
 public class GenreRepositoryORM implements GenreRepository {
 
-    private static final String IDENTIFIER = "id";
-
     @PersistenceContext
     private final EntityManager em;
 
@@ -36,7 +34,7 @@ public class GenreRepositoryORM implements GenreRepository {
         if (genre.getId() == null) {
             em.persist(genre);
         } else {
-            em.merge(genre);
+            genre = em.merge(genre);
         }
         return genre;
     }

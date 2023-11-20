@@ -15,8 +15,6 @@ import ru.otus.hw.repositories.AuthorRepository;
 @RequiredArgsConstructor
 public class AuthorRepositoryORM implements AuthorRepository {
 
-    private static final String IDENTIFIER = "id";
-
     @PersistenceContext
     private final EntityManager em;
 
@@ -36,7 +34,7 @@ public class AuthorRepositoryORM implements AuthorRepository {
         if (author.getId() == null) {
             em.persist(author);
         } else {
-            em.merge(author);
+            author = em.merge(author);
         }
         return author;
     }
